@@ -5,27 +5,27 @@
     --overlay-light: rgba(169, 146, 125, 0.7);
     --overlay-dark: rgba(33, 33, 33, 0.7);
     --nav-bg: rgba(33, 33, 33, 0.4);
-    --yellow-glow: rgba(255, 223, 0, 0.25);
-    --yellow-bright: rgba(255, 223, 0, 0.45);
 
     /* Layout */
     --radius: 36px;
+    --radius-btn: calc(var(--radius) * 0.6);
     --spacing: 40px;
     --padding: 16px;
-    
+    --width-max: 1400px;
+    --width-form: 600px;
+
     /* Effects */
     --shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
     --blur: blur(12px);
+    --transition: all 0.4s ease;
     --anim: 1s cubic-bezier(0.4, 0, 0.2, 1);
-    
-    /* Typography */
-    --font-base: 14px;
-    --font-title: 22px;
-    
-    /* Buttons */
+
+    /* Components */
+    --input-height: 28px;
     --btn-size: 1.2rem;
     --btn-width: 160px;
     --btn-height: 40px;
+    --font-title: 22px;  /* Add or update this var */
 }
 
 /* Base Styles */
@@ -33,7 +33,7 @@
 
 body {
     padding: var(--padding);
-    font: var(--font-base)/1.5 'Roboto', sans-serif;
+    font: 14px/1.5 'Roboto', sans-serif;
     position: relative;
 }
 
@@ -55,10 +55,11 @@ h1, h2, h3 { color: var(--light); }
 
 .container {
     width: 100%;
-    max-width: 1400px;
+    max-width: var(--width-max);
     border-radius: var(--radius);
 }
 
+/* Shared Component Styles */
 .main-header, .hero, .newsletter, .contact, .main-footer, .products-title, .product-card {
     backdrop-filter: var(--blur);
     border-radius: var(--radius);
@@ -75,7 +76,6 @@ h1, h2, h3 { color: var(--light); }
     flex-direction: column;
     align-items: center;
     gap: 8px;
-    animation: fadeIn var(--anim) forwards, glowEffect 4s ease-in-out 3;
 }
 
 .logo {
@@ -95,6 +95,7 @@ h1, h2, h3 { color: var(--light); }
     padding: 0;
 }
 
+/* Buttons & Interactive Elements */
 .btn-shared,
 .main-nav a,
 .btn-style,
@@ -103,7 +104,7 @@ h1, h2, h3 { color: var(--light); }
     font-size: var(--btn-size);
     background: var(--nav-bg);
     padding: 6px var(--padding);
-    border-radius: calc(var(--radius) * 0.6);
+    border-radius: var(--radius-btn);
     backdrop-filter: var(--blur);
     border: none;
     cursor: pointer;
@@ -112,14 +113,13 @@ h1, h2, h3 { color: var(--light); }
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.4s ease;
+    transition: var(--transition);
     text-decoration: none;
 }
 
 .hero {
     background: var(--overlay-dark);
     margin-bottom: var(--spacing);
-    width: 100%;
 }
 
 .hero p {
@@ -178,26 +178,33 @@ h1, h2, h3 { color: var(--light); }
     gap: 16px;
 }
 
+/* Forms */
 .newsletter form {
     display: flex;
-    gap: 1rem;
-    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--padding);
     width: 100%;
-    max-width: 600px;
+    max-width: var(--width-form);
+    padding: var(--padding);
+    margin: 0 auto;
 }
 
 .newsletter form label {
+    flex: 0 0 auto;
     color: var(--light);
     font-size: 1.1rem;
-    padding: 6px
+    padding: 6px;
+    white-space: nowrap;
 }
 
 .newsletter input {
-    flex: 1;
+    flex: 1 1 200px;
+    min-width: 0;
     max-width: 350px;
-    padding: 12px;
+    height: var(--input-height);
     border-radius: var(--radius);
     border: 1px solid var(--light);
+    padding: 0 12px;
 }
 
 .contact {
@@ -240,15 +247,11 @@ h1, h2, h3 { color: var(--light); }
     to { opacity: 0.86; }
 }
 
-@keyframes glow {
-    0%, 100% { box-shadow: var(--shadow), inset 0 0 70px -40px var(--yellow-glow); }
-    50% { box-shadow: var(--shadow), inset 300px 0 120px -50px var(--yellow-bright); }
-}
-
 .btn-shared:hover,
 .main-nav a:hover,
 .newsletter button:hover {
-    animation: glow 1.2s ease-in-out infinite;
+    transform: translateY(-2px);
+    transition: transform 0.3s ease;
 }
 
 @media screen and (max-width: 768px) {
@@ -307,6 +310,20 @@ h1, h2, h3 { color: var(--light); }
     }
 
     .container { padding: calc(var(--padding) / 4); }
+
+    .newsletter form {
+        flex-direction: column;
+        padding: calc(var(--padding) / 2);
+    }
+
+    .newsletter input,
+    .newsletter button {
+        max-height: 28px 
+    }
+
+    .newsletter form label {
+        font-size: 1rem;
+    }
 }
 
 @media screen and (max-width: 360px) {
