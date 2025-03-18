@@ -1,39 +1,33 @@
 :root {
-    /* Colors */
     --dark: #212121;
     --light: #fff;
-    --overlay-light: rgba(169, 146, 125, 0.7);
-    --overlay-dark: rgba(33, 33, 33, 0.7);
     --nav-bg: rgba(33, 33, 33, 0.4);
+    --overlay-dark: rgba(33, 33, 33, 0.7);
+    --overlay-light: rgba(169, 146, 125, 0.7);
 
-    /* Layout */
+    --btn-height: 40px;
+    --btn-size: 1.2rem;
+    --btn-width: 160px;
+    --font-title: 22px;
+    --input-height: 28px;
+    --padding: 18px;
     --radius: 36px;
     --radius-btn: calc(var(--radius) * 0.6);
     --spacing: 40px;
-    --padding: 18px;
-    --width-max: 1400px;
     --width-form: 600px;
+    --width-max: 1400px;
 
-    /* Effects */
-    --shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
-    --blur: blur(12px);
-    --transition: all 0.4s ease;
     --anim: 1s cubic-bezier(0.4, 0, 0.2, 1);
-
-    /* Components */
-    --input-height: 28px;
-    --btn-size: 1.2rem;
-    --btn-width: 160px;
-    --btn-height: 40px;
-    --font-title: 22px;  /* Add or update this var */
+    --blur: blur(12px);
+    --shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+    --transition: all 0.4s ease;
 }
 
-/* Base Styles */
 * { margin: 0; }
 
 body {
-    padding: var(--padding);
     font: 14px/1.5 'Roboto', sans-serif;
+    padding: var(--padding);
     position: relative;
 }
 
@@ -59,7 +53,6 @@ h1, h2, h3 { color: var(--light); }
     border-radius: var(--radius);
 }
 
-/* Shared Component Styles */
 .main-header, .hero, .newsletter, .contact, .main-footer, .products-title, .product-card {
     backdrop-filter: var(--blur);
     border-radius: var(--radius);
@@ -70,12 +63,12 @@ h1, h2, h3 { color: var(--light); }
 }
 
 .main-header {
+    align-items: center;
     background: var(--overlay-light);
-    margin-bottom: var(--spacing);
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 8px;
+    margin-bottom: var(--spacing);
 }
 
 .logo {
@@ -95,7 +88,6 @@ h1, h2, h3 { color: var(--light); }
     padding: 0;
 }
 
-/* Buttons & Interactive Elements */
 .btn-shared,
 .main-nav a,
 .btn-style,
@@ -109,7 +101,6 @@ h1, h2, h3 { color: var(--light); }
     border: none;
     cursor: pointer;
     width: var(--btn-width);
-    /*! height: var(--btn-height); */
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -178,15 +169,12 @@ h1, h2, h3 { color: var(--light); }
     gap: 16px;
 }
 
-/* Forms */
 .newsletter form {
     display: flex;
     flex-wrap: wrap;
     gap: var(--padding);
     width: 100%;
     max-width: var(--width-form);
-    /*! padding: var(--padding); */
-    /*! margin: 0 auto; */
 }
 
 .newsletter form label {
@@ -195,14 +183,12 @@ h1, h2, h3 { color: var(--light); }
     font-size: 1.1rem;
     padding: 8px;
     white-space: nowrap;
-    /*! padding-top: 4px; */
 }
 
 .newsletter input {
     flex: 1 1 200px;
     min-width: 0;
     max-width: 350px;
-    /*! height: var(--input-height); */
     border-radius: var(--radius);
     border: 1px solid var(--light);
     padding-left: 10px;
