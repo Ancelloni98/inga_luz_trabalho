@@ -10,7 +10,7 @@
     --radius: 36px;
     --radius-btn: calc(var(--radius) * 0.6);
     --spacing: 40px;
-    --padding: 16px;
+    --padding: 18px;
     --width-max: 1400px;
     --width-form: 600px;
 
@@ -109,7 +109,7 @@ h1, h2, h3 { color: var(--light); }
     border: none;
     cursor: pointer;
     width: var(--btn-width);
-    height: var(--btn-height);
+    /*! height: var(--btn-height); */
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -185,26 +185,27 @@ h1, h2, h3 { color: var(--light); }
     gap: var(--padding);
     width: 100%;
     max-width: var(--width-form);
-    padding: var(--padding);
-    margin: 0 auto;
+    /*! padding: var(--padding); */
+    /*! margin: 0 auto; */
 }
 
 .newsletter form label {
     flex: 0 0 auto;
     color: var(--light);
     font-size: 1.1rem;
-    padding: 6px;
+    padding: 8px;
     white-space: nowrap;
+    /*! padding-top: 4px; */
 }
 
 .newsletter input {
     flex: 1 1 200px;
     min-width: 0;
     max-width: 350px;
-    height: var(--input-height);
+    /*! height: var(--input-height); */
     border-radius: var(--radius);
     border: 1px solid var(--light);
-    padding: 0 12px;
+    padding-left: 10px;
 }
 
 .contact {
@@ -257,7 +258,7 @@ h1, h2, h3 { color: var(--light); }
 @media screen and (max-width: 768px) {
     :root {
         --btn-width: 140px;
-        --btn-height: 35px;
+        --btn-height: 34px;
     }
 
     .main-nav ul {
