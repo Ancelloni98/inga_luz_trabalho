@@ -1,10 +1,14 @@
 :root {
+    /* Colors */
     --dark: #212121;
     --light: #fff;
+    --success: rgba(40, 167, 69, 0.85);
+    --error: rgba(220, 53, 69, 0.75);
     --nav-bg: rgba(33, 33, 33, 0.4);
     --overlay-dark: rgba(33, 33, 33, 0.7);
     --overlay-light: rgba(169, 146, 125, 0.7);
 
+    /* Sizes */
     --btn-height: 40px;
     --btn-size: 1.2rem;
     --btn-width: 160px;
@@ -17,7 +21,9 @@
     --width-form: 600px;
     --width-max: 1400px;
 
+    /* Effects */
     --anim: 1s cubic-bezier(0.4, 0, 0.2, 1);
+    --anim-fast: 0.5s ease;
     --blur: blur(12px);
     --shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
     --transition: all 0.4s ease;
@@ -88,6 +94,7 @@ h1, h2, h3 { color: var(--light); }
     padding: 0;
 }
 
+/* Shared Components Styles */
 .btn-shared,
 .main-nav a,
 .btn-style,
@@ -347,4 +354,48 @@ h1, h2, h3 { color: var(--light); }
     }
 
     .container { padding: calc(var(--padding) / 6); }
+}
+
+/* Popup Styles */
+.popup {
+    display: none;
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    padding: 12px;
+    border-radius: calc(var(--radius) * 0.7);
+    backdrop-filter: var(--blur);
+    color: var(--light);
+    animation: slideInRight var(--anim-fast) forwards;
+    z-index: 9999;
+    box-shadow: var(--shadow);
+    font-weight: 500;
+    min-width: 180px;
+    max-width: 250px;
+    font-size: 0.9rem;
+}
+
+@keyframes slideInRight {
+    from { 
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to { 
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.popup.success {
+    background: var(--success);
+    border: 1px solid rgba(40, 167, 69, 0.3);
+}
+
+.popup.error {
+    background: var(--error);
+    border: 1px solid rgba(220, 53, 69, 0.2);
+    padding: 8px;
+    font-size: 0.8rem;
+    min-width: 150px;
+    max-width: 200px;
 }
