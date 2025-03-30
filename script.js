@@ -33,3 +33,23 @@ newsletterForm.addEventListener('submit', function(e) {
         showPopup(MESSAGES.error, 'error');
     }
 });
+
+// Theme switching functionality
+const themeToggle = document.getElementById('theme-toggle');
+const html = document.documentElement;
+const THEME_KEY = 'preferred-theme';
+
+function setTheme(theme) {
+    html.setAttribute('data-theme', theme);
+    localStorage.setItem(THEME_KEY, theme);
+    themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+}
+
+// Load saved theme
+const savedTheme = localStorage.getItem(THEME_KEY) || 'light';
+setTheme(savedTheme);
+
+themeToggle.addEventListener('click', () => {
+    const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+});
