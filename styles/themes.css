@@ -1,0 +1,26 @@
+[data-theme="dark"] {
+    background-color: var(--dark-bg);
+}
+
+[data-theme="dark"] body {
+    background-color: var(--dark-bg);
+}
+
+[data-theme="dark"] .main-header,
+[data-theme="dark"] .hero,
+[data-theme="dark"] .products-title,
+[data-theme="dark"] .newsletter,
+[data-theme="dark"] .contact,
+[data-theme="dark"] .product-card,
+[data-theme="dark"] .main-footer {
+    background: var(--dark-overlay-light);
+}
+
+[data-theme="dark"] .main-nav a,
+[data-theme="dark"] .btn-style {
+    background: var(--dark-nav-bg);
+}
+
+[data-theme="dark"] .main-footer {
+    color: var(--light);
+}
