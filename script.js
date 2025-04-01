@@ -5,7 +5,7 @@ const CONFIG = {
     VALIDATION: {
         NAME_REGEX: /^[A-Za-zÀ-ÖØ-öø-ÿ\s]{3,}$/,
         EMAIL_REGEX: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-        PHONE_REGEX: /^(\(\d{2}\)|\d{2})\s?(\d{4,5})-?(\d{4})$/,
+        PHONE_REGEX: /^\(\d{2}\)\s\d{4,5}-\d{4}$/,
         ADDRESS_MIN_LENGTH: 5,
         CITY_MIN_LENGTH: 2
     },
@@ -93,17 +93,52 @@ function setTheme(theme) {
 ELEMENTS.form.addEventListener('submit', function(e) {
     e.preventDefault();
     
-    const formData = {
-        name: document.getElementById('name').value.trim(),
-        email: document.getElementById('email').value.trim(),
-        phone: document.getElementById('phone').value.trim(),
-        address: document.getElementById('address').value.trim(),
-        city: document.getElementById('city').value.trim()
+    const formData = new FormData(this);
+    const data = {
+        name: formData.get('nome'),
+        email: formData.get('email'),
+        phone: formData.get('telefone'),
+        address: formData.get('endereco'),
+        city: formData.get('cidade')
     };
     
-    if (validateForm(formData)) {
-        showPopup(CONFIG.MESSAGES.SUCCESS, 'success');
-        this.reset();
+    if (validateForm(data)) {
+        const params = new URLSearchParams();
+        formData.forEach((value, key) => {
+            params.append(key, value);
+        });
+
+        fetch('salvar_newsletter.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: params.toString()
+        })
+        .then(async response => {
+            const text = await response.text();
+            console.log('Resposta bruta:', text);
+            
+            try {
+                return JSON.parse(text);
+            } catch (e) {
+                console.error('Erro ao parsear resposta:', text);
+                throw new Error('Resposta inválida do servidor');
+            }
+        })
+        .then(data => {
+            console.log('Dados processados:', data);
+            if (data.status === 'success') {
+                showPopup('Cadastro realizado com sucesso!', 'success');
+                this.reset();
+            } else {
+                showPopup(data.message || 'Erro ao salvar', 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Erro detalhado:', error);
+            showPopup('Erro ao processar requisição: ' + error.message, 'error');
+        });
     }
 });
 
