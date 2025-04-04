@@ -6,40 +6,35 @@ require_once 'config.php';
 header('Content-Type: application/json');
 ob_clean();
 
+function validateInput($data) {
+    return array_filter($data, function($value) {
+        return !empty(trim($value));
+    });
+}
+
 try {
-    if (empty($_POST)) {
-        throw new Exception("Dados não recebidos");
+    $required_fields = ['nome', 'email', 'telefone', 'endereco', 'cidade'];
+    $data = validateInput($_POST);
+    
+    if (count($data) !== count($required_fields)) {
+        throw new Exception("Todos os campos são obrigatórios");
     }
 
-    $query = "INSERT INTO newsletter (nome, email, telefone, endereco, cidade) VALUES (?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($query);
-
-    if (!$stmt) {
+    $stmt = $conn->prepare("INSERT INTO newsletter (nome, email, telefone, endereco, cidade) VALUES (?, ?, ?, ?, ?)");
+    
+    if (!$stmt || !$stmt->bind_param("sssss", ...array_values($data))) {
         throw new Exception("Erro na preparação: " . $conn->error);
     }
 
-    $stmt->bind_param("sssss", 
-        $_POST['nome'],
-        $_POST['email'],
-        $_POST['telefone'],
-        $_POST['endereco'],
-        $_POST['cidade']
-    );
-
     if (!$stmt->execute()) {
-        throw new Exception("Erro ao executar: " . $stmt->error);
+        throw new Exception("Erro ao salvar dados");
     }
 
-    echo json_encode([
-        'status' => 'success',
-        'message' => 'Cadastro realizado com sucesso!'
-    ]);
+    echo json_encode(['status' => 'success', 'message' => 'Cadastro realizado com sucesso!']);
 
 } catch (Exception $e) {
-    echo json_encode([
-        'status' => 'error',
-        'message' => $e->getMessage()
-    ]);
+    http_response_code(400);
+    echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
 } finally {
     if (isset($stmt)) $stmt->close();
     if (isset($conn)) $conn->close();

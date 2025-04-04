@@ -1,5 +1,6 @@
-CREATE DATABASE IF NOT EXISTS inga_luz_db;
-USE inga_luz_db;
+-- Removendo a criação do banco de dados (para evitar erro de permissão)
+-- CREATE DATABASE IF NOT EXISTS inga_luz_db;
+-- USE inga_luz_db;
 
 CREATE TABLE IF NOT EXISTS newsletter (
     id INT AUTO_INCREMENT PRIMARY KEY,

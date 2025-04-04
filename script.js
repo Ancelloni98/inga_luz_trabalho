@@ -53,7 +53,8 @@ function showPopup(message, type) {
 function validateForm(formData) {
     const { VALIDATION, MESSAGES } = CONFIG;
     
-    if (!VALIDATION.NAME_REGEX.test(formData.name)) {
+    // Changed validation to match form field names
+    if (!VALIDATION.NAME_REGEX.test(formData.nome)) {
         showPopup(MESSAGES.ERROR.NAME, 'error');
         return false;
     }
@@ -63,17 +64,17 @@ function validateForm(formData) {
         return false;
     }
     
-    if (!VALIDATION.PHONE_REGEX.test(formData.phone)) {
+    if (!VALIDATION.PHONE_REGEX.test(formData.telefone)) {
         showPopup(MESSAGES.ERROR.PHONE, 'error');
         return false;
     }
     
-    if (formData.address.length < VALIDATION.ADDRESS_MIN_LENGTH) {
+    if (formData.endereco.length < VALIDATION.ADDRESS_MIN_LENGTH) {
         showPopup(MESSAGES.ERROR.ADDRESS, 'error');
         return false;
     }
     
-    if (formData.city.length < VALIDATION.CITY_MIN_LENGTH) {
+    if (formData.cidade.length < VALIDATION.CITY_MIN_LENGTH) {
         showPopup(MESSAGES.ERROR.CITY, 'error');
         return false;
     }
@@ -90,55 +91,27 @@ function setTheme(theme) {
     themeToggle.textContent = theme === THEMES.DARK ? ICONS.DARK : ICONS.LIGHT;
 }
 
-ELEMENTS.form.addEventListener('submit', function(e) {
+ELEMENTS.form.addEventListener('submit', async function(e) {
     e.preventDefault();
     
     const formData = new FormData(this);
-    const data = {
-        name: formData.get('nome'),
-        email: formData.get('email'),
-        phone: formData.get('telefone'),
-        address: formData.get('endereco'),
-        city: formData.get('cidade')
-    };
+    const data = Object.fromEntries(formData);
     
-    if (validateForm(data)) {
-        const params = new URLSearchParams();
-        formData.forEach((value, key) => {
-            params.append(key, value);
+    if (!validateForm(data)) return;
+
+    try {
+        const response = await fetch('salvar_newsletter.php', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: new URLSearchParams(formData)
         });
 
-        fetch('salvar_newsletter.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: params.toString()
-        })
-        .then(async response => {
-            const text = await response.text();
-            console.log('Resposta bruta:', text);
-            
-            try {
-                return JSON.parse(text);
-            } catch (e) {
-                console.error('Erro ao parsear resposta:', text);
-                throw new Error('Resposta inválida do servidor');
-            }
-        })
-        .then(data => {
-            console.log('Dados processados:', data);
-            if (data.status === 'success') {
-                showPopup('Cadastro realizado com sucesso!', 'success');
-                this.reset();
-            } else {
-                showPopup(data.message || 'Erro ao salvar', 'error');
-            }
-        })
-        .catch(error => {
-            console.error('Erro detalhado:', error);
-            showPopup('Erro ao processar requisição: ' + error.message, 'error');
-        });
+        const json = await response.json();
+        showPopup(json.message, json.status);
+        
+        if (json.status === 'success') this.reset();
+    } catch (error) {
+        showPopup('Erro ao processar requisição', 'error');
     }
 });
 
