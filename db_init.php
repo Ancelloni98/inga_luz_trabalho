@@ -33,4 +33,8 @@ try {
 } catch (Exception $e) {
     echo "❌ Erro: " . $e->getMessage();
 }
+<<<<<<< HEAD
 ?>
+=======
+?>
+>>>>>>> ef6bd75 (Revert to commit cc7678f)

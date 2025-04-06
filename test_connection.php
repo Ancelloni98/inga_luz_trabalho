@@ -12,4 +12,8 @@ if ($conn->ping()) {
 }
 
 $conn->close();
+<<<<<<< HEAD
 ?>
+=======
+?>
+>>>>>>> ef6bd75 (Revert to commit cc7678f)
