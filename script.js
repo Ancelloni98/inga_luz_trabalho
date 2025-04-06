@@ -53,12 +53,7 @@ function showPopup(message, type) {
 function validateForm(formData) {
     const { VALIDATION, MESSAGES } = CONFIG;
     
-<<<<<<< HEAD
-    // Changed validation to match form field names
-    if (!VALIDATION.NAME_REGEX.test(formData.nome)) {
-=======
     if (!VALIDATION.NAME_REGEX.test(formData.name)) {
->>>>>>> ef6bd75 (Revert to commit cc7678f)
         showPopup(MESSAGES.ERROR.NAME, 'error');
         return false;
     }
@@ -68,29 +63,17 @@ function validateForm(formData) {
         return false;
     }
     
-<<<<<<< HEAD
-    if (!VALIDATION.PHONE_REGEX.test(formData.telefone)) {
-=======
     if (!VALIDATION.PHONE_REGEX.test(formData.phone)) {
->>>>>>> ef6bd75 (Revert to commit cc7678f)
         showPopup(MESSAGES.ERROR.PHONE, 'error');
         return false;
     }
     
-<<<<<<< HEAD
-    if (formData.endereco.length < VALIDATION.ADDRESS_MIN_LENGTH) {
-=======
     if (formData.address.length < VALIDATION.ADDRESS_MIN_LENGTH) {
->>>>>>> ef6bd75 (Revert to commit cc7678f)
         showPopup(MESSAGES.ERROR.ADDRESS, 'error');
         return false;
     }
     
-<<<<<<< HEAD
-    if (formData.cidade.length < VALIDATION.CITY_MIN_LENGTH) {
-=======
     if (formData.city.length < VALIDATION.CITY_MIN_LENGTH) {
->>>>>>> ef6bd75 (Revert to commit cc7678f)
         showPopup(MESSAGES.ERROR.CITY, 'error');
         return false;
     }
@@ -107,29 +90,6 @@ function setTheme(theme) {
     themeToggle.textContent = theme === THEMES.DARK ? ICONS.DARK : ICONS.LIGHT;
 }
 
-<<<<<<< HEAD
-ELEMENTS.form.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    const formData = new FormData(this);
-    const data = Object.fromEntries(formData);
-    
-    if (!validateForm(data)) return;
-
-    try {
-        const response = await fetch('salvar_newsletter.php', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: new URLSearchParams(formData)
-        });
-
-        const json = await response.json();
-        showPopup(json.message, json.status);
-        
-        if (json.status === 'success') this.reset();
-    } catch (error) {
-        showPopup('Erro ao processar requisição', 'error');
-=======
 ELEMENTS.form.addEventListener('submit', function(e) {
     e.preventDefault();
     
@@ -179,7 +139,6 @@ ELEMENTS.form.addEventListener('submit', function(e) {
             console.error('Erro detalhado:', error);
             showPopup('Erro ao processar requisição: ' + error.message, 'error');
         });
->>>>>>> ef6bd75 (Revert to commit cc7678f)
     }
 });
 
@@ -191,8 +150,4 @@ ELEMENTS.themeToggle.addEventListener('click', () => {
 });
 
 const savedTheme = localStorage.getItem(CONFIG.STORAGE.THEME_KEY) || CONFIG.THEMES.LIGHT;
-<<<<<<< HEAD
 setTheme(savedTheme);
-=======
-setTheme(savedTheme);
->>>>>>> ef6bd75 (Revert to commit cc7678f)

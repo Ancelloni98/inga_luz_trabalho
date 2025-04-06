@@ -55,6 +55,7 @@
 
             <section id="cadastro" class="newsletter">
                 <h2>Receba Nossas Promoções</h2>
+                <h2>Receba Nossas Promoções</h2>
                 <form action="salvar_newsletter.php" method="POST" id="newsletterForm">
                     <label for="name"><strong>Nome:</strong></label>
                     <input type="text" 
